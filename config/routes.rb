@@ -1,3 +1,19 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  devise_for :users, skip: [:registrations, :passwords], controllers:{ sessions: 'users/sessions'}
+
+  use_doorkeeper scope: 'api' do
+    skip_controllers :applications, :authorized_applications
+  end
+
+  scope module: :api, defaults: { format: :json }, path: 'api' do
+    devise_for :users,
+      path: '',
+      path_names: {
+        registration: 'register'
+      },
+      controllers: {
+        registrations: 'api/users/registrations',
+      },
+      skip: [:sessions, :passwords]
+  end
 end
