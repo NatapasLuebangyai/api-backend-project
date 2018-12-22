@@ -2,6 +2,7 @@ class Asset < ApplicationRecord
   attr_accessor :force_destroy
 
   has_many :asset_balances, dependent: :destroy
+  has_many :transactions, class_name: 'Transaction::Base'
 
   validates :name,
     presence: true,

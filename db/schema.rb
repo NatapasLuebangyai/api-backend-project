@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_22_093802) do
+ActiveRecord::Schema.define(version: 2018_12_22_111600) do
 
   create_table "asset_balances", force: :cascade do |t|
     t.integer "amount", default: 0, null: false
@@ -81,6 +81,21 @@ ActiveRecord::Schema.define(version: 2018_12_22_093802) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  end
+
+  create_table "transaction_bases", force: :cascade do |t|
+    t.integer "amount_cents", default: 0, null: false
+    t.string "amount_currency", default: "USD", null: false
+    t.string "name", limit: 30, default: "Kq1QhOs4JIZDEDKeIKk-AA", null: false
+    t.boolean "approved"
+    t.string "type"
+    t.integer "user_id"
+    t.integer "asset_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["asset_id"], name: "index_transaction_bases_on_asset_id"
+    t.index ["name"], name: "index_transaction_bases_on_name", unique: true
+    t.index ["user_id"], name: "index_transaction_bases_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

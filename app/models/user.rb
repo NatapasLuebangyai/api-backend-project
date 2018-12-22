@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   has_one :balance, dependent: :destroy
   has_many :asset_balances, class_name: 'AssetBalance', through: :balance
+  has_many :transactions, class_name: 'Transaction::Base', dependent: :destroy
 
   validates :balance, presence: true, on: :update
 

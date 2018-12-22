@@ -1,0 +1,7 @@
+en:
+  asset_balance:
+    increase:
+      wrong_number: 'Wrong number of increase amount'
+    decrease:
+      not_enough: 'Not enough asset'
+      wrong_number: 'Wrong number of decrease amount'
