@@ -15,9 +15,11 @@ Rails.application.routes.draw do
         registrations: 'api/users/registrations',
       },
       skip: [:sessions, :passwords]
+
+    resources :balances, only: [:index]
   end
 
   scope module: :admin, path: 'admin' do
-    
+
   end
 end

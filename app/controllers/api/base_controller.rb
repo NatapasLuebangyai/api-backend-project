@@ -14,6 +14,10 @@ module Api
       render status: 404
     end
 
+    def current_user
+      current_resource_owner
+    end
+
     protected
 
     def configure_permitted_parameters

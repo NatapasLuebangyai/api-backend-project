@@ -73,6 +73,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include FactoryBot::Syntax::Methods
   config.include SignInAs
+  config.include ApiSignIn
 
   config.before(:each) do
     FactoryBot.reload
