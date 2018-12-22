@@ -3,6 +3,5 @@ FactoryBot.define do
 
   factory :asset do
     name                        { FactoryBot.generate(:name) }
-    price                       { 1000 }
   end
 end
