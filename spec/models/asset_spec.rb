@@ -18,6 +18,10 @@ RSpec.describe Asset, type: :model do
     end
   end
 
+  describe 'Associations' do
+    it { should have_many(:asset_balances).dependent(:destroy) }
+  end
+
   describe 'Column Specifications' do
     it { should have_db_column(:name).of_type(:string).with_options(null: false) }
     it { should have_db_index(:name).unique(true) }
@@ -27,9 +31,37 @@ RSpec.describe Asset, type: :model do
 
   describe 'Methods' do
     describe '#soft_delete!' do
+      let(:user)                { FactoryBot.create(:user) }
+      let(:balance)             { user.balance }
+      let!(:asset2)             { FactoryBot.create(:asset) }
+      let!(:asset_balance1)      { FactoryBot.create(:asset_balance, balance: balance, asset: asset) }
+      let!(:asset_balance2)      { FactoryBot.create(:asset_balance, balance: balance, asset: asset2) }
+
       it 'should update soft_deleted to true' do
         asset.soft_delete!
         expect(asset.soft_deleted).to eq(true)
+      end
+
+      it 'should destroy all associated asset balances' do
+        asset.soft_delete!
+        expect(asset.reload.asset_balances).not_to be_present
+      end
+    end
+  end
+
+  describe 'Callbacks' do
+    describe 'Beofore Destroy' do
+      describe '#unable_to_destroy' do
+        it 'should abort destroy' do
+          asset.destroy
+          expect(Asset.where(id: asset.id)).to be_present
+        end
+
+        it 'should allow destroy on attr attr accessor force_destroy' do
+          asset.force_destroy = true
+          asset.destroy
+          expect(Asset.where(id: asset.id)).not_to be_present
+        end
       end
     end
   end

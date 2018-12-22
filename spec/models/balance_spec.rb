@@ -8,6 +8,7 @@ RSpec.describe Balance, type: :model do
 
   describe 'Associations' do
     it { should belong_to(:user) }
+    it { should have_many(:assets).class_name('AssetBalance').dependent(:destroy) }
   end
 
   describe 'Column Specifications' do

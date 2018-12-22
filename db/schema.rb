@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_22_062533) do
+ActiveRecord::Schema.define(version: 2018_12_22_093802) do
+
+  create_table "asset_balances", force: :cascade do |t|
+    t.integer "amount", default: 0, null: false
+    t.integer "asset_id"
+    t.integer "balance_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["asset_id"], name: "index_asset_balances_on_asset_id"
+    t.index ["balance_id"], name: "index_asset_balances_on_balance_id"
+  end
 
   create_table "assets", force: :cascade do |t|
     t.string "name", null: false

@@ -1,4 +1,8 @@
 class Asset < ApplicationRecord
+  attr_accessor :force_destroy
+
+  has_many :asset_balances, dependent: :destroy
+
   validates :name,
     presence: true,
     uniqueness: {
@@ -9,7 +13,16 @@ class Asset < ApplicationRecord
   monetize :price_cents,
     numericality: { greater_than_or_equal_to: 0 }
 
+  before_destroy :unable_to_destroy
+
   def soft_delete!
+    self.asset_balances.destroy_all
     self.update(soft_deleted: true)
+  end
+
+  private
+
+  def unable_to_destroy
+    throw :abort unless force_destroy
   end
 end

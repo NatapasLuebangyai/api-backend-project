@@ -6,7 +6,8 @@ RSpec.describe User, type: :model do
   end
 
   describe 'Associations' do
-    it { should have_one(:balance).validate(true).dependent(:destroy) }
+    it { should have_one(:balance).dependent(:destroy) }
+    it { should have_many(:asset_balances).class_name('AssetBalance').through(:balance) }
   end
 
   describe 'Callbacks' do

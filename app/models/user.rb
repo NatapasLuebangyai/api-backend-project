@@ -7,7 +7,8 @@ class User < ApplicationRecord
   has_many :access_tokens, class_name: "Doorkeeper::AccessToken",
     foreign_key: :resource_owner_id, dependent: :delete_all
 
-  has_one :balance, validate: true, dependent: :destroy
+  has_one :balance, dependent: :destroy
+  has_many :asset_balances, class_name: 'AssetBalance', through: :balance
 
   validates :balance, presence: true, on: :update
 
