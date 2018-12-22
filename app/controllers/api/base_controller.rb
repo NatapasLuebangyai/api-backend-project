@@ -6,6 +6,14 @@ module Api
 
     respond_to :json
 
+    def render_forbidden
+      render status: 403
+    end
+
+    def render_not_found
+      render status: 404
+    end
+
     protected
 
     def configure_permitted_parameters

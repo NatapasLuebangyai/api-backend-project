@@ -16,4 +16,8 @@ Rails.application.routes.draw do
       },
       skip: [:sessions, :passwords]
   end
+
+  scope module: :admin, path: 'admin' do
+    
+  end
 end
