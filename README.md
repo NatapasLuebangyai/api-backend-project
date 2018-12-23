@@ -1,12 +1,12 @@
 # Setup
-Bundle gem with `bundle install`
-Then setup database with  `rake db:setup`
+Bundle with `bundle install`
+and then setup database with  `rake db:setup`
 
 **By default app will provided**
   - Admin account with
     email: `admin@example.com`
     password: `adminadmin`
-  - Asset names `GOLD`
+  - Asset names `GOLD` in price `10USD`
   - Currency support only `USD` and `THB`, the exchange rate is  `1USD = 40THB`
 
 # Api Routes
@@ -39,7 +39,7 @@ Request format :
     }
 }
 ```
-Output format
+Output format :
 ```
 {
     "id": 2,
@@ -115,7 +115,7 @@ Request format :
     "currency": "THB"
 }
 ```
-Currency is optional, if not request with specific currecy it will use default currency (USD).
+Currency is optional, if not request with specific currecy will use default currency (USD).
 ```
 { "amount": 1000 }
 ```
@@ -142,7 +142,7 @@ Request format :
     "currency": "THB"
 }
 ```
-Currency is optional, if not request with specific currecy it will use default currency (USD).
+Currency is optional, if not request with specific currecy will use default currency (USD).
 ```
 { "amount": 1000 }
 ```
