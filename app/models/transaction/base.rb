@@ -47,7 +47,7 @@ class Transaction::Base < ApplicationRecord
       id: self.id,
       name: self.name,
       type: self.class.to_s.demodulize.underscore,
-      amount: self.amount.format(symbol: false).to_f,
+      amount: self.amount.format(symbol: false),
       created_at: self.created_at
     }
 

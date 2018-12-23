@@ -4,3 +4,7 @@ en:
       asset_name_invalid: 'Asset name is invalid'
     sell:
       asset_name_invalid: 'Asset name is invalid'
+    approve:
+      success: 'Approve transaction success'
+    reject:
+      success: 'Reject transaction success'

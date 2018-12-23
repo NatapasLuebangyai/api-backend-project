@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: 'admin/transactions#index'
+
   devise_for :users, skip: [:registrations], controllers:{ sessions: 'users/sessions'}
 
   use_doorkeeper scope: 'api' do
@@ -26,7 +28,10 @@ Rails.application.routes.draw do
     end
   end
 
-  scope module: :admin, path: 'admin' do
-
+  namespace :admin, path: 'admin' do
+    resources :transactions, only: [:index] do
+      patch :approve, on: :member
+      patch :reject, on: :member
+    end
   end
 end

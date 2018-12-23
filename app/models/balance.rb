@@ -29,7 +29,7 @@ class Balance < ApplicationRecord
   end
 
   def display_informations
-    hash = { cash: self.cash.format(symbol: false).to_f }
+    hash = { cash: self.cash.format(symbol: false) }
     self.assets.joins(:asset).each do |asset_balance|
       hash[asset_balance.asset.name] = asset_balance.amount
     end
