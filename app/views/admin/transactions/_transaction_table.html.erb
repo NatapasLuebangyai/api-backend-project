@@ -1,7 +1,7 @@
 <table class="table is-striped is-hoverable is-fullwidth">
   <thead>
     <tr>
-      <% %w[ID Name UserID Type Asset Amount CreatedAt Approve Reject].each do |name| %>
+      <% table_headers.each do |name| %>
         <th><%= name %></th>
       <% end %>
     </tr>
