@@ -6,8 +6,8 @@ and then setup database with  `rake db:setup`
   - Admin account with
     email: `admin@example.com`
     password: `adminadmin`
-  - Asset names `GOLD` in price `10USD`
-  - Currency support only `USD` and `THB`, the exchange rate is  `1USD = 40THB`
+  - Asset names `GOLD` in price `10 USD`
+  - Default currency is `USD` and now only support `USD` and `THB`, the exchange rate is  `1USD = 40THB`
 
 # Api Routes
 | Route | Method | Description | Authenticate |
@@ -47,7 +47,8 @@ Output format :
     "admin": false
 }
 ```
-
+<br />
+<br />
 **/api/token**
 
 Request format :
@@ -67,11 +68,14 @@ Output format :
     "created_at": 1545581626
 }
 ```
+<br />
 ## **Note**
 On routes that require authenticate should add access token on header by using key `Authorization` with value in format :
 ```
 Bearer 79d1a66b01e12aa4e76abc7300c97f8650fc36df8ef77c8935e79e8f51713241
 ```
+<br />
+<br />
 **/api/transactions/buy**
 
 Request format :
@@ -89,6 +93,8 @@ Output format :
     "asset": "GOLD"
 }
 ```
+<br />
+<br />
 **/api/transactions/sell**
 
 Request format :
@@ -106,6 +112,8 @@ Output format :
     "asset": "GOLD"
 }
 ```
+<br />
+<br />
 **/api/transactions/top_up**
 
 Request format :
@@ -132,7 +140,8 @@ Output format :
     "approved": false
 }
 ```
-
+<br />
+<br />
 **/api/transactions/withdraw**
 
 Request format :
