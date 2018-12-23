@@ -1,6 +1,4 @@
 class Transaction::Withdraw < Transaction::Base
-  before_create :try_perform
-
   def perform(options = { save: true })
     return true if user_balance.decrease(self.amount, options)
     errors.add(:base, user_balance.errors.full_messages)
@@ -9,8 +7,8 @@ class Transaction::Withdraw < Transaction::Base
 
   protected
 
-  def skip_perform_on_create?
-    true
+  def perform_on_create
+    try_perform
   end
 
   def dynamic_informations

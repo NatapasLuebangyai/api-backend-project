@@ -70,11 +70,16 @@ class Transaction::Base < ApplicationRecord
   protected
 
   def skip_perform_on_create?
-    skip_perform_on_create || false
+    skip_perform_on_create
   end
 
   def dynamic_informations
     {}
+  end
+
+  def perform_on_create
+    throw :abort if !self.perform || self.errors.present?
+    approve
   end
 
   def try_perform
@@ -90,15 +95,10 @@ class Transaction::Base < ApplicationRecord
   private
 
   def set_amount_from_price
-    self.amount = asset.price
+    self.amount = cache_query(Asset, id: self.asset_id).price
   end
 
   def generate_name
     self.name ||= SecureRandom.urlsafe_base64
-  end
-
-  def perform_on_create
-    throw :abort if !self.perform || self.errors.present?
-    approve
   end
 end
