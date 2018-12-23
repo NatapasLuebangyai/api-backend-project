@@ -1,4 +1,6 @@
 class Transaction::Base < ApplicationRecord
+  include Cacheable
+
   attr_accessor :skip_perform_on_create
 
   belongs_to :user
@@ -52,6 +54,17 @@ class Transaction::Base < ApplicationRecord
     }
 
     hash.merge(dynamic_informations)
+  end
+
+  def user_balance
+    @user_balance ||= cache_query(Balance, user_id: self.user_id)
+  end
+
+  def user_asset_balance
+    return @user_asset_balance if @user_asset_balance.present?
+
+    @user_asset_balance = cache_query(AssetBalance, balance_id: user_balance.id, asset_id: self.asset_id)
+    @user_asset_balance ||= AssetBalance.new(balance: user_balance, asset_id: self.asset_id)
   end
 
   protected

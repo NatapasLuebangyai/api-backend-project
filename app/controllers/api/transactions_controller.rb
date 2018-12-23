@@ -1,11 +1,13 @@
 class Api::TransactionsController < Api::BaseController
+  include Cacheable
+
   def index
     transactions = current_user.transactions
     render json: transactions.map(&:display_informations), status: 200
   end
 
   def buy
-    asset = Asset.find_by(name: asset_params[:asset_name])
+    asset = cache_query(Asset, name: asset_params[:asset_name])
     if asset.blank?
       render json: { errors: t('transaction.buy.asset_name_invalid') }, status: :bad_request
       return false
@@ -20,7 +22,7 @@ class Api::TransactionsController < Api::BaseController
   end
 
   def sell
-    asset = Asset.find_by(name: asset_params[:asset_name])
+    asset = cache_query(Asset, name: asset_params[:asset_name])
     if asset.blank?
       render json: { errors: t('transaction.sell.asset_name_invalid') }, status: :bad_request
       return false

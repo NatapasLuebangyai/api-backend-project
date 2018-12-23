@@ -128,7 +128,7 @@ RSpec.describe Balance, type: :model do
 
       it 'should return balance display information' do
         result = balance.display_informations
-        expect(result[:cash]).to eq(balance.cash.format(symbol: false).to_f)
+        expect(result[:cash]).to eq(balance.cash.format(symbol: false))
         asset_balances.each do |asset_balance|
           expect(result[asset_balance.asset.name]).to eq(asset_balance.amount)
         end

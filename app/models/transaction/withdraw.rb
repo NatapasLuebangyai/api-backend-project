@@ -2,9 +2,8 @@ class Transaction::Withdraw < Transaction::Base
   before_create :try_perform
 
   def perform(options = { save: true })
-    balance = user.balance
-    return true if balance.decrease(self.amount, options)
-    errors.add(:base, balance.errors.full_messages)
+    return true if user_balance.decrease(self.amount, options)
+    errors.add(:base, user_balance.errors.full_messages)
     false
   end
 

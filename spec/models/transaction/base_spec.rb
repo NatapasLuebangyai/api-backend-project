@@ -82,7 +82,7 @@ RSpec.describe Transaction::Base, type: :model do
         expect(result[:id]).to eq(transaction.id)
         expect(result[:name]).to eq(transaction.name)
         expect(result[:type]).to eq(transaction.class.to_s.demodulize.underscore)
-        expect(result[:amount]).to eq(transaction.amount.format(symbol: false).to_f)
+        expect(result[:amount]).to eq(transaction.amount.format(symbol: false))
         expect(result[:created_at]).to eq(transaction.created_at)
       end
     end

@@ -74,9 +74,11 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include SignInAs
   config.include ApiSignIn
+  config.include ClearCacheable
 
   config.before(:each) do
     FactoryBot.reload
     DatabaseCleaner.clean
+    clear_cacheable
   end
 end

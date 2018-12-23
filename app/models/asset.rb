@@ -1,4 +1,6 @@
 class Asset < ApplicationRecord
+  include Cacheable
+
   attr_accessor :force_destroy
 
   has_many :asset_balances, dependent: :destroy
@@ -14,6 +16,7 @@ class Asset < ApplicationRecord
   monetize :price_cents,
     numericality: { greater_than_or_equal_to: 0 }
 
+  after_save :write_in_cache
   before_destroy :unable_to_destroy
 
   def soft_delete!
@@ -25,5 +28,9 @@ class Asset < ApplicationRecord
 
   def unable_to_destroy
     throw :abort unless force_destroy
+  end
+
+  def write_in_cache
+    cache_write(self)
   end
 end

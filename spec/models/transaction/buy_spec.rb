@@ -6,10 +6,10 @@ RSpec.describe Transaction::Buy, type: :model do
   end
 
   describe 'Methods' do
-    let(:user)                  { FactoryBot.create(:user) }
-    let(:balance)               { user.balance }
-    let(:asset)                 { FactoryBot.create(:asset, price: 25) }
-    let(:transaction)           { FactoryBot.build(:transaction_buy, user: user, asset: asset) }
+    let!(:user)                 { FactoryBot.create(:user) }
+    let!(:balance)              { user.balance }
+    let!(:asset)                { FactoryBot.create(:asset, price: 25) }
+    let!(:transaction)          { FactoryBot.build(:transaction_buy, user: user, asset: asset) }
 
     describe '#perform' do
       it 'should decrease balance and increase asset balance' do
