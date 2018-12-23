@@ -29,6 +29,7 @@ Then setup database with  `rake db:setup`
 
 ## Request parameter format on each routes
 **/api/register**
+
 Request format :
 ```
 {
@@ -48,6 +49,7 @@ Output format
 ```
 
 **/api/token**
+
 Request format :
 ```
 {
@@ -71,6 +73,7 @@ On routes that require authenticate should add access token on header by using k
 Bearer 79d1a66b01e12aa4e76abc7300c97f8650fc36df8ef77c8935e79e8f51713241
 ```
 **/api/transactions/buy**
+
 Request format :
 ```
 { "asset_name": "GOLD" }
@@ -87,6 +90,7 @@ Output format :
 }
 ```
 **/api/transactions/sell**
+
 Request format :
 ```
 { "asset_name": "GOLD" }
@@ -103,6 +107,7 @@ Output format :
 }
 ```
 **/api/transactions/top_up**
+
 Request format :
 ```
 {
@@ -129,6 +134,7 @@ Output format :
 ```
 
 **/api/transactions/withdraw**
+
 Request format :
 ```
 {
