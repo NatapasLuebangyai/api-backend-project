@@ -5,7 +5,7 @@ RSpec.describe Transaction::Base, type: :model do
   let!(:transaction)          { FactoryBot.create(:transaction_basis, user: user) }
 
   describe 'Validations' do
-    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:name).on(:update) }
     it { should validate_uniqueness_of(:name) }
     it { should validate_length_of(:name).is_at_most(30) }
     it { should monetize(:amount).with_currency(:usd) }
@@ -75,6 +75,17 @@ RSpec.describe Transaction::Base, type: :model do
         expect(transaction.reload.approved).to eq(false)
       end
     end
+
+    describe '#display_informations' do
+      it 'should return hash of display informations' do
+        result = transaction.display_informations
+        expect(result[:id]).to eq(transaction.id)
+        expect(result[:name]).to eq(transaction.name)
+        expect(result[:type]).to eq(transaction.class.to_s.demodulize.underscore)
+        expect(result[:amount]).to eq(transaction.amount.format(symbol: false).to_f)
+        expect(result[:created_at]).to eq(transaction.created_at)
+      end
+    end
   end
 
   describe 'Callbacks' do
@@ -95,17 +106,36 @@ RSpec.describe Transaction::Base, type: :model do
           expect(transaction.amount).to eq(0)
         end
       end
+
+      describe '#generate_name' do
+        it 'should generate name if name is blank' do
+          transaction.save
+          expect(transaction.name).to be_present
+        end
+
+        it 'should not generate name if name is present' do
+          transaction.name = 'transactionname'
+          expect(transaction.name).to eq('transactionname')
+        end
+
+        it 'should generate name only on create' do
+          transaction.save
+          transaction_name = transaction.name
+          transaction.save
+          expect(transaction.reload.name).to eq(transaction_name)
+        end
+      end
     end
 
     describe 'Before Create' do
-      describe '#approve' do
+      describe '#try_perform' do
         it 'should set approved to true' do
           transaction.save
           expect(transaction.reload.approved).to eq(true)
         end
 
-        it 'should skip if skip_approve_on_create is true' do
-          transaction.skip_approve_on_create = true
+        it 'should skip if skip_perform_on_create is true' do
+          transaction.skip_perform_on_create = true
           transaction.save
           expect(transaction.reload.approved).not_to eq(true)
         end

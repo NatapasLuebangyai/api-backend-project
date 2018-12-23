@@ -2,16 +2,17 @@ class Transaction::Buy < Transaction::Base
   validates :asset,
     presence: true
 
-  def perform
+  def perform(options = {})
     balance = user.balance
     asset_balance = balance.assets.where(asset_id: asset.id).first
     asset_balance ||= AssetBalance.new(balance: balance, asset: asset)
-    if balance.decrease!(asset.price)
-      asset_balance.increase!
-    else
-      errors.add(:base, balance.errors.full_messages)
-      try(:throw, :abort)
-      false
-    end
+    errors.add(:base, balance.errors.full_messages) and return false unless balance.decrease!(asset.price)
+    asset_balance.increase!
+  end
+
+  protected
+
+  def dynamic_informations
+    { asset: self.asset.name }
   end
 end

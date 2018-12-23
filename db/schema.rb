@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 2018_12_22_111600) do
   create_table "transaction_bases", force: :cascade do |t|
     t.integer "amount_cents", default: 0, null: false
     t.string "amount_currency", default: "USD", null: false
-    t.string "name", limit: 30, default: "Kq1QhOs4JIZDEDKeIKk-AA", null: false
+    t.string "name", limit: 30, null: false
     t.boolean "approved"
     t.string "type"
     t.integer "user_id"

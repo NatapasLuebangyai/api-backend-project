@@ -23,9 +23,12 @@ RSpec.describe Transaction::Sell, type: :model do
         expect(asset_balance.amount).to eq(0)
       end
 
-      it 'should abort if decrease balance asset failure' do
+      it 'should return false if decrease balance asset failure' do
         asset_balance.update(amount: 0)
-        transaction.perform
+
+        result = transaction.perform
+        expect(result).to eq(false)
+        expect(transaction.errors).to be_present
 
         balance.reload
         asset_balance.reload

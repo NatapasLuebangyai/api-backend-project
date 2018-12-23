@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Transaction::TopUp, type: :model do
-  describe 'Validations' do
-    it { should validate_numericality_of(:amount).is_greater_than_or_equal_to(1) }
-  end
-
   describe 'Methods' do
     let(:user)                  { FactoryBot.create(:user) }
     let(:balance)               { user.balance }
@@ -20,10 +16,13 @@ RSpec.describe Transaction::TopUp, type: :model do
         expect(balance.cash).to eq(cash)
       end
 
-      it 'should abort if increase balance failure' do
+      it 'should return false if increase balance failure' do
         cash = Money.from_amount(-100)
         transaction.amount = cash
-        transaction.perform
+
+        result = transaction.perform
+        expect(result).to eq(false)
+        expect(transaction.errors).to be_present
 
         balance.reload
         expect(balance.cash).to eq(0)

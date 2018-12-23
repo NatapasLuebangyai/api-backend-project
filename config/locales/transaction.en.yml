@@ -1,0 +1,6 @@
+en:
+  transaction:
+    buy:
+      asset_name_invalid: 'Asset name is invalid'
+    sell:
+      asset_name_invalid: 'Asset name is invalid'

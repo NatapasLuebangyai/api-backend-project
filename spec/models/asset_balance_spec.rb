@@ -28,10 +28,10 @@ RSpec.describe AssetBalance, type: :model do
         expect(asset_balance.reload.amount).to eq(0)
       end
 
-      it 'should increase by 1 if not pass value' do
-        asset_balance.increase
-        expect(asset_balance.amount).to eq(1)
-        expect(asset_balance.reload.amount).to eq(0)
+      it 'should save if options save is true' do
+        asset_balance.increase(5, save: true)
+        expect(asset_balance.amount).to eq(5)
+        expect(asset_balance.reload.amount).to eq(5)
       end
 
       it 'should return false if value < 0' do
@@ -70,10 +70,10 @@ RSpec.describe AssetBalance, type: :model do
         expect(asset_balance.reload.amount).to eq(10)
       end
 
-      it 'should decrease by 1 if not pass value' do
-        asset_balance.decrease
-        expect(asset_balance.amount).to eq(9)
-        expect(asset_balance.reload.amount).to eq(10)
+      it 'should save if options save is true' do
+        asset_balance.decrease(5, save: true)
+        expect(asset_balance.amount).to eq(5)
+        expect(asset_balance.reload.amount).to eq(5)
       end
 
       it 'should return false if value < 0' do

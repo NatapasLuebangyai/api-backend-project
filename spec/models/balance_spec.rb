@@ -28,6 +28,13 @@ RSpec.describe Balance, type: :model do
         expect(balance.reload.cash).to eq(0)
       end
 
+      it 'should save if options save is true' do
+        amount = Money.from_amount(100)
+        balance.increase(amount, save: true)
+        expect(balance.cash).to eq(amount)
+        expect(balance.reload.cash).to eq(amount)
+      end
+
       it 'should return false if value < 0' do
         amount = Money.from_amount(-1)
         expect(balance.increase(amount)).to eq(false)
@@ -60,6 +67,13 @@ RSpec.describe Balance, type: :model do
         balance.decrease(amount)
         expect(balance.cash).to eq(Money.from_amount(7))
         expect(balance.reload.cash).to eq(Money.from_amount(10))
+      end
+
+      it 'should save if options save is true' do
+        amount = Money.from_amount(3)
+        balance.decrease(amount, save: true)
+        expect(balance.cash).to eq(Money.from_amount(7))
+        expect(balance.reload.cash).to eq(Money.from_amount(7))
       end
 
       it 'should return false if value < 0' do
@@ -97,6 +111,27 @@ RSpec.describe Balance, type: :model do
         amount = Money.from_amount(11)
         expect(balance.decrease!(amount)).to eq(false)
         expect(balance.cash).to eq(Money.from_amount(10))
+      end
+    end
+
+    describe '#display_informations' do
+      let!(:assets)              { (1..3).map { |i| FactoryBot.create(:asset) } }
+      let!(:asset_balances)      {
+        assets.map do |asset|
+          FactoryBot.create(:asset_balance, balance: balance, asset: asset)
+        end
+      }
+
+      before do
+        balance.update(cash: 10)
+      end
+
+      it 'should return balance display information' do
+        result = balance.display_informations
+        expect(result[:cash]).to eq(balance.cash.format(symbol: false).to_f)
+        asset_balances.each do |asset_balance|
+          expect(result[asset_balance.asset.name]).to eq(asset_balance.amount)
+        end
       end
     end
   end

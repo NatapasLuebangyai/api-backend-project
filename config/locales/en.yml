@@ -31,3 +31,5 @@
 
 en:
   hello: "Hello world"
+  forbidden: "Forbidden"
+  not_found: "Not Found"

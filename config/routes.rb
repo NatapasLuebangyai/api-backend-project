@@ -17,6 +17,13 @@ Rails.application.routes.draw do
       skip: [:sessions, :passwords]
 
     resources :balances, only: [:index]
+
+    resources :transactions, only: [:index] do
+      post :buy, on: :collection
+      post :sell, on: :collection
+      post :top_up, on: :collection
+      post :withdraw, on: :collection
+    end
   end
 
   scope module: :admin, path: 'admin' do

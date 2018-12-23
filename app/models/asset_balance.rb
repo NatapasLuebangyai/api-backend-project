@@ -6,22 +6,24 @@ class AssetBalance < ApplicationRecord
     presence: true,
     numericality: { greater_than_or_equal_to: 0 }
 
-  def increase(value = 1)
+  def increase(value, options = {})
     errors.add(:base, I18n.t('asset_balance.increase.wrong_number')) and return false if value < 0
     self.amount += value
+    options[:save] ? self.save : true
   end
 
-  def decrease(value = 1)
+  def decrease(value, options = {})
     errors.add(:base, I18n.t('asset_balance.decrease.wrong_number')) and return false if value < 0
-    errors.add(:cash, I18n.t('asset_balance.decrease.not_enough')) and return false if value > self.amount
+    errors.add(:base, I18n.t('asset_balance.decrease.not_enough')) and return false if value > self.amount
     self.amount -= value
+    options[:save] ? self.save : true
   end
 
   def increase!(value = 1)
-    increase(value) ? self.save : false
+    increase(value, save: true)
   end
 
   def decrease!(value = 1)
-    decrease(value) ? self.save : false
+    decrease(value, save: true)
   end
 end
