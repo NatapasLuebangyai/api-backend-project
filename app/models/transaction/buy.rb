@@ -3,8 +3,12 @@ class Transaction::Buy < Transaction::Base
     presence: true
 
   def perform(options = {})
-    errors.add(:base, user_balance.errors.full_messages) and return false unless user_balance.decrease!(asset.price)
-    user_asset_balance.increase!
+    if user_balance.decrease!(asset.price)
+      user_asset_balance.increase!
+    else
+      errors.add(:base, user_balance.errors.full_messages)
+      false
+    end
   end
 
   protected
