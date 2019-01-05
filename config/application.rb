@@ -17,5 +17,7 @@ module ApiBackendProject
     # the framework and any gems in your application.
 
     config.action_controller.perform_caching = true
+
+    config.debug_exception_response_format = :api
   end
 end
