@@ -42,6 +42,7 @@ gem 'doorkeeper'
 
 gem 'money-rails', '~>1.12'
 gem "bulma-rails", "~> 0.7.2"
+gem 'rack-cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
