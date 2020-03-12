@@ -1,5 +1,5 @@
 # Demo
-Demo is live here: https://api-backend-test-project.herokuapp.com/
+Demo is live here: https://gold-exchange.herokuapp.com/
 
 # Setup
 Bundle with `bundle install`
