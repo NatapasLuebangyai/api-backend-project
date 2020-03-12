@@ -1,3 +1,6 @@
+# Demo
+Demo is live here: https://api-backend-test-project.herokuapp.com/
+
 # Setup
 Bundle with `bundle install`
 and then setup database with  `rake db:setup`
